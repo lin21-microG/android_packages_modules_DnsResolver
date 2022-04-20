@@ -57,6 +57,7 @@
 
 #include <android-base/logging.h>
 #include <android-base/parseint.h>
+#include <android-base/properties.h>
 
 #include "Experiments.h"
 #include "netd_resolv/resolv.h"
@@ -1546,6 +1547,9 @@ static struct addrinfo* getCustomHosts(const size_t netid, const char* _Nonnull 
 
 static bool files_getaddrinfo(const size_t netid, const char* name, const addrinfo* pai,
                               addrinfo** res) {
+    if ((android::base::GetIntProperty("persist.security.hosts_disable", 0) != 0) && (strcmp("localhost", name) != 0) && (strcmp("ip6-localhost", name) != 0))
+        return false;
+
     struct addrinfo sentinel = {};
     struct addrinfo *p, *cur;
     FILE* hostf = nullptr;
