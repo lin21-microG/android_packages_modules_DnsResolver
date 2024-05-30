@@ -47,6 +47,8 @@ constexpr int MAXADDRS = 35;
 #define ESTIMATED_LINELEN	32
 #define HCFILE_ALLOC_SIZE	256
 
+#define MIN(a,b) ((a)<(b)?(a):(b))
+
 /*
  * Host cache entry for hcfile.c_data.
  * Offsets are into hcfile.h_data.
